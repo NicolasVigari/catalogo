@@ -1,0 +1,78 @@
+<!DOCTYPE HTML>
+<html lang="es">
+	<head>
+		<meta charset="utf-8"/>
+		<title>
+			{% block title %} Symfony 3: Catálogo de Productos{% endblock %}
+		</title>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+		<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" rel="stylesheet">
+		<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" ></script>
+
+	</head>
+	<body class="p-3 mb-2 bg-secondary text-white" >
+		<header>
+			<nav class="navbar navbar-expand-lg navbar-light bg-light">
+				<a  class="navbar-brand"  href="{{ path('homepage') }}">Lista de produuctos</a>
+				<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+					<span class="navbar-toggler-icon"></span>
+				</button>
+
+				<div class="collapse navbar-collapse" id="navbarSupportedContent">
+					<ul class="navbar-nav mr-auto">
+						{% block menu %}
+							<li class="nav-item active">
+								<a class="nav-link" href="{{ path('product_index') }}">Productos <span class="sr-only">(current)</span></a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="{{ path('category_index') }}">Categorias</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="{{ path('user_index') }}">Usuario</a>
+							</li>
+						{% endblock %}
+						<li class="nav-item dropdown" class="form-control mr-sm-2">
+							<a class="nav-link dropdown-toggle"  href="#"  id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+								<img src="https://img.icons8.com/material-sharp/24/000000/settings.png">
+							</a>
+							<div class="dropdown-menu" aria-labelledby="navbarDropdown">
+								{% if app.user %}
+									<a class="dropdown-item" href="">Salir</a>
+								{% else %}
+									{#<a class="dropdown-item" href="{{ path('login') }}">Entrar</a>#}
+									<div class="dropdown-divider"></div>
+									<a class="dropdown-item" href="">Entrar</a>
+									<a class="dropdown-item" href="{{ path('user_new') }}">Registrar</a>
+								{% endif %}
+							</div>
+						</li>
+					</ul>
+				</div>
+			</nav>
+		</header>
+
+		{% block messages %}
+			<div class="container">
+				{% for label, flashes in app.session.flashbag.all %}
+					{% for flash in flashes %}
+						<div class="alert alert-{{ label }}">
+							{{ flash }}
+						</div>
+					{% endfor %}
+				{% endfor %}
+
+			</div>
+
+		{% endblock %}
+		<div style="width:800px" class="container" >
+			{% block body %} Content default {% endblock %}
+		</div>
+
+		<footer>
+			<div class="container">
+				<p>Symfony 3: Catálogo de Productos - Nicolas Vigari &copy;</p>
+			</div>
+		</footer>
+
+	</body>
+</html>

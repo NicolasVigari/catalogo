@@ -6,13 +6,14 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 
-class DefaultController extends Controller {
+class SearchController extends Controller {
 
-/**
-	 * @Route("/", name="homepage")
-	 */
 	
-	public function indexAction(Request $request) {
+		/**
+	 * @Route("/pruebas", name="pruebas")
+	 */
+	public function pruebasAction(Request $request)
+{
 		$em = $this->getDoctrine()->getManager();
 		
     $form = $this->createFormBuilder()
@@ -31,14 +32,29 @@ class DefaultController extends Controller {
 		}
 	}
 
-    return $this->render('default/index.html.twig', [
+    return $this->render('default/pruebas.html.twig', [
         'form' => $form->createView(),
 		'products' => $products
     ]);
+}
+	
+	
+	/**
+	 * @Route("/search", name="search")
+	 */
+	public function searchAction(Request $request, $products) {
 		
+		
+		dump($products);die;
+		$a = $request->request->get('products')->getData();
+		$data = $request->query->get('products');
+		dump($a);dump($data);die;
+		 $real_entity = $this->get('products')->get($products);
+		return $this->render('default/search.html.twig', array(
+			'products' => $data
+		));
 	}
 	
-
-
+	
 
 }

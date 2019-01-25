@@ -10,4 +10,14 @@ namespace AppBundle\Repository;
  */
 class ProductRepository extends \Doctrine\ORM\EntityRepository
 {
+	public function findByName($name)
+    {
+        return $this
+				->createQueryBuilder('p')
+				->where('p.name LIKE :name')
+				->setParameter('name', '%' . $name . '%')
+				->getQuery()
+				->getResult()
+				;
+    }
 }

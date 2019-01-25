@@ -1,0 +1,18 @@
+{% extends 'layout.html.twig' %}
+{% form_theme form'bootstrap_3_layout.html.twig' %}
+{% block body %}
+    <h1>Crear un nuevo producto.</h1>
+
+	
+
+    {{ form_start(form) }}
+        {{ form_widget(form) }}
+        <input type="submit" class="btn btn-primary" value="Crear" />
+    {{ form_end(form) }}
+
+    <ul>
+        <li>
+            <a href="{{ path('product_index') }}" class="text-white">Volver a la lista</a>
+        </li>
+    </ul>
+{% endblock %}

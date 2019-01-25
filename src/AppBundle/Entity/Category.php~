@@ -31,7 +31,7 @@ class Category
     /**
      * @var string
      *
-     * @ORM\Column(name="icon", type="string", nullable=true, length=255)
+     * @ORM\Column(name="icon", type="string", length=255)
      */
     private $icon;
 	
@@ -139,28 +139,5 @@ class Category
 	public function __toString() {
 		return $this->name;
 	}
-
-    /**
-     * Add product
-     *
-     * @param \AppBundle\Entity\Product $product
-     *
-     * @return Category
-     */
-    public function addProduct(\AppBundle\Entity\Product $product)
-    {
-        $this->products[] = $product;
-
-        return $this;
-    }
-
-    /**
-     * Remove product
-     *
-     * @param \AppBundle\Entity\Product $product
-     */
-    public function removeProduct(\AppBundle\Entity\Product $product)
-    {
-        $this->products->removeElement($product);
-    }
 }
+
