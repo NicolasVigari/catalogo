@@ -5,7 +5,10 @@ namespace AppBundle\Controller;
 use AppBundle\Entity\User;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;use Symfony\Component\HttpFoundation\Request;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Session\Session;
+
 
 /**
  * User controller.
@@ -42,12 +45,21 @@ class UserController extends Controller
         $user = new User();
         $form = $this->createForm('AppBundle\Form\UserType', $user);
         $form->handleRequest($request);
+		
+		
 
         if ($form->isSubmitted() && $form->isValid()) {
+			$encoder = $this->container->get('security.password_encoder');
+			$encoded = $encoder->encodePassword($user, $form->get("password")->getData(), $user->getSalt());
+			$user->setPassword($encoded);
+			
+			
             $em = $this->getDoctrine()->getManager();
             $em->persist($user);
             $em->flush($user);
-
+			
+			$this->addFlash('success', 'Usuario Creado!');
+			
             return $this->redirectToRoute('user_show', array('id' => $user->getId()));
         }
 
@@ -86,8 +98,14 @@ class UserController extends Controller
         $editForm->handleRequest($request);
 
         if ($editForm->isSubmitted() && $editForm->isValid()) {
+			$encoder = $this->container->get('security.password_encoder');
+			$encoded = $encoder->encodePassword($user, $editForm->get("password")->getData(), $user->getSalt());
+			$user->setPassword($encoded);
+			
             $this->getDoctrine()->getManager()->flush();
-
+			
+			$this->addFlash('success', 'Editado Coreectamente!!');
+			
             return $this->redirectToRoute('user_edit', array('id' => $user->getId()));
         }
 

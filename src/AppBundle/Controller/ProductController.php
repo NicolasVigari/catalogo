@@ -71,7 +71,7 @@ class ProductController extends Controller {
 	 */
 	public function showAction(Product $product) {
 		$deleteForm = $this->createDeleteForm($product);
-
+				
 		return $this->render('product/show.html.twig', array(
 					'product' => $product,
 					'delete_form' => $deleteForm->createView(),
@@ -95,6 +95,8 @@ class ProductController extends Controller {
 			$file->move($this->getParameter('brochures_directory'), $fileName);
 			$product->setImage($fileName);
 			$this->getDoctrine()->getManager()->flush();
+			
+			$this->addFlash('success', 'Editado correctamente');
 			
            return $this->redirectToRoute('product_edit', array('id' => $product->getId()));
 		}

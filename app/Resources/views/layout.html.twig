@@ -21,6 +21,7 @@
 				<div class="collapse navbar-collapse" id="navbarSupportedContent">
 					<ul class="navbar-nav mr-auto">
 						{% block menu %}
+							{% if app.user  %}
 							<li class="nav-item active">
 								<a class="nav-link" href="{{ path('product_index') }}">Productos <span class="sr-only">(current)</span></a>
 							</li>
@@ -30,18 +31,18 @@
 							<li class="nav-item">
 								<a class="nav-link" href="{{ path('user_index') }}">Usuario</a>
 							</li>
+							{% endif %}
 						{% endblock %}
 						<li class="nav-item dropdown" class="form-control mr-sm-2">
 							<a class="nav-link dropdown-toggle"  href="#"  id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 								<img src="https://img.icons8.com/material-sharp/24/000000/settings.png">
 							</a>
 							<div class="dropdown-menu" aria-labelledby="navbarDropdown">
-								{% if app.user %}
-									<a class="dropdown-item" href="">Salir</a>
+								{% if app.user  %}
+									<a class="dropdown-item" href="{{ path('logout') }}">Salir</a>
 								{% else %}
-									{#<a class="dropdown-item" href="{{ path('login') }}">Entrar</a>#}
 									<div class="dropdown-divider"></div>
-									<a class="dropdown-item" href="">Entrar</a>
+									<a class="dropdown-item" href="{{ path('login') }}">Entrar</a>
 									<a class="dropdown-item" href="{{ path('user_new') }}">Registrar</a>
 								{% endif %}
 							</div>

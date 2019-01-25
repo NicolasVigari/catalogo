@@ -52,6 +52,8 @@ class CategoryController extends Controller
             $em->persist($category);
             $em->flush($category);
 			
+			$this->addFlash('success', 'Categoria Creada!');
+			
             return $this->redirectToRoute('category_show', array('id' => $category->getId()));
         }
 
@@ -96,6 +98,8 @@ class CategoryController extends Controller
 			$category->setIcon($fileName);
             $this->getDoctrine()->getManager()->flush();
 
+			$this->addFlash('success', 'Editado correctamente');
+			
             return $this->redirectToRoute('category_edit', array('id' => $category->getId()));
         }
 
